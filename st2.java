@@ -1,3 +1,5 @@
+// cdi
+
 import javax.enterprise.context.SessionScoped;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.inject.Named;
