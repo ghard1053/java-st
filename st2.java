@@ -35,6 +35,10 @@ public class StrongMessageService implements MessageService {
 //---------------------
 
 import java.io.IOException;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -65,3 +69,46 @@ public class EchoServlet extends HttpServlet {
       req.getRequestDispatcher("/WEB-INF/echo.jsp").forward(req, res);
     }
 }
+
+
+@Typed(PaymentService.class)
+@ApplicationScoped
+public class CreditService extends AbstractTxService implements PaymentService {...}
+
+
+@Qualifier
+@Retention(RUNTIME)
+@Target({METHOD, FIELD, PARAMETER, TYPE})
+public @interface Distance {}
+
+@Qualifier
+@Retention(RUNTIME)
+@Target({METHOD, FIELD, PARAMETER, TYPE})
+public @interface FIFO {}
+
+@ApplicationScoped
+@Distance
+public class InventoryReserverByDistance implements InventryReserver {...}
+
+@ApplicationScoped
+@FIFO
+public class InventoryReserverByFIFO implements InventryReserver {...}
+
+@Inject
+@Distance
+InventryReserver reserver;
+
+@Qualifier
+@Retention(RUNTIME)
+@Target({METHOD, FIELD, PARAMETER, TYPE})
+public @interface Express {}
+
+@ApplicationScoped
+@Express
+@FIFO
+public class InventoryReserverExpressByFIFO implements InventryReserver {...}
+
+@Inject
+@Express
+@FIFO
+InventryReserver reserver;
