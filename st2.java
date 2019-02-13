@@ -112,3 +112,24 @@ public class InventoryReserverExpressByFIFO implements InventryReserver {...}
 @Express
 @FIFO
 InventryReserver reserver;
+
+
+
+@Qualifier
+@Retention(RUNTIME)
+@Target({METHOD, FIELD, PARAMETER, TYPE})
+public @interface Reserver {
+  ReserverStrategy value();
+}
+
+public enum ReserverStrategy {
+  DISTANCE, FIFO
+}
+
+@ApplicationScoped
+@Reserver(DISTANCE)
+public class InventoryReserverByDistance implements InventryReserver {...}
+
+@ApplicationScoped
+@Reserver(FIFO)
+public class InventoryReserverByFIFO implements InventryReserver {...}
