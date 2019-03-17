@@ -133,3 +133,7 @@ public class InventoryReserverByDistance implements InventryReserver {...}
 @ApplicationScoped
 @Reserver(FIFO)
 public class InventoryReserverByFIFO implements InventryReserver {...}
+
+@Reserver(FIFO)
+InventoryReserver reserver;
+
